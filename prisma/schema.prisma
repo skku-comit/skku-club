@@ -35,7 +35,7 @@ model User {
 }
 
 model Club {
-    id          Int              @id @default(autoincrement())
+    id          BigInt           @id @default(autoincrement())
     name        String
     slug        String           @unique
     memberships ClubMembership[]
@@ -51,7 +51,7 @@ enum ClubMemberRole {
 model ClubMembership {
     id        BigInt         @id @default(autoincrement())
     club      Club           @relation(fields: [clubId], references: [id], onDelete: Cascade)
-    clubId    Int
+    clubId    BigInt
     user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    BigInt
     role      ClubMemberRole @default(MEMBER)
