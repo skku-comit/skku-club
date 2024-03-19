@@ -8,7 +8,7 @@ export type UserRoleType = `${z.infer<typeof UserRoleSchema>}`
 
 export const UserSchema = z.object({
   role: UserRoleSchema,
-  id: z.number(),
+  id: z.bigint(),
   email: z.string(),
   emailVerified: z.boolean(),
   name: z.string().nullable(),
@@ -19,10 +19,10 @@ export type User = z.infer<typeof UserSchema>
 
 export type Abilities = {
   isAdmin: boolean
-  isClubMember: (clubId: number) => Promise<boolean>
-  isClubOwner: (clubId: number) => Promise<boolean>
-  requireClubMember: (clubId: number) => Promise<void>
-  requireClubOwner: (clubId: number) => Promise<void>
+  isClubMember: (clubId: bigint) => Promise<boolean>
+  isClubOwner: (clubId: bigint) => Promise<boolean>
+  requireClubMember: (clubId: bigint) => Promise<void>
+  requireClubOwner: (clubId: bigint) => Promise<void>
 }
 
 export type Context = {
