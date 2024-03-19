@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky",
+    "prepare": "husky && vc env pull .env",
     "start:db": "podman machine stop; podman machine start; podman-compose up -d"
   },
   "dependencies": {

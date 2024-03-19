@@ -25,7 +25,19 @@ pnpm i
 pnpm start:db
 ```
 
-7. 개발 서버 실행
+7. Vercel CLI 설치
+
+```bash
+pnpm i -g vercel
+```
+
+8. Vercel 프로젝트 링크
+
+```bash
+vc link
+```
+
+8. 개발 서버 실행
 
 ```bash
 pnpm dev
