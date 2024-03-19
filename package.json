@@ -6,7 +6,7 @@
   "scripts": {
     "db:build": "prisma generate",
     "db:push": "prisma db push --accept-data-loss",
-    "dev": "pnpm run db:push && next dev",
+    "dev": "pnpm run db:push && next dev -p 6000",
     "build": "pnpm run db:build && next build",
     "start": "next start",
     "lint": "next lint",
