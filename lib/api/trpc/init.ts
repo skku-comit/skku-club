@@ -2,8 +2,6 @@ import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
 import { z } from 'zod'
 
-export type { default as superjson } from 'superjson'
-
 export const UserRoleSchema = z.enum(['USER', 'ADMIN'])
 
 export type UserRoleType = `${z.infer<typeof UserRoleSchema>}`
