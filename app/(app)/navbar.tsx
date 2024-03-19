@@ -1,3 +1,5 @@
+'use client'
+
 import { RiAccountCircleLine } from '@remixicon/react'
 import { RiCloseCircleLine } from '@remixicon/react'
 import { Route } from 'next'
