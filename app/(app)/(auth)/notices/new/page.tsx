@@ -33,7 +33,10 @@ type Inputs = z.infer<typeof NewNoticeSchema>
 export default function NewNoticePage() {
   const form = useForm<Inputs>({
     mode: 'all',
-    resolver: zodResolver(NewNoticeSchema)
+    resolver: zodResolver(NewNoticeSchema),
+    defaultValues: {
+      publishedAt: new Date()
+    }
   })
   const router = useRouter()
   const create = apiClient.notices.create.useMutation({
@@ -91,9 +94,15 @@ export default function NewNoticePage() {
                         </FormLabel>
                         <FormControl>
                           <Input
-                            type="datetime-local"
+                            type="datetime"
                             className="mt-1 block w-full"
                             {...field}
+                            onChange={(e) => {
+                              form.setValue(
+                                'publishedAt',
+                                new Date(e.target.value)
+                              )
+                            }}
                           />
                         </FormControl>
                         <FormDescription>

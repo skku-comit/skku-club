@@ -6,6 +6,6 @@ export const NoticeContentSchema = z.string().min(1)
 
 export const NewNoticeSchema = z.object({
   title: NoticeTitleSchema,
-  publishedAt: z.string(),
+  publishedAt: z.date(),
   content: NoticeContentSchema
 })
