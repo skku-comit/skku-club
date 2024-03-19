@@ -6,7 +6,7 @@
   "scripts": {
     "db:build": "prisma generate",
     "db:push": "prisma db push --accept-data-loss",
-    "dev": "pnpm run db:push && next dev",
+    "dev": "pnpm run db:push && next dev -p 9000",
     "build": "pnpm run db:build && next build",
     "start": "next start",
     "lint": "next lint",
@@ -14,6 +14,7 @@
     "start:db": "podman machine stop; podman machine start; podman-compose up -d"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.5.0",
     "@hookform/resolvers": "^3.3.4",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
