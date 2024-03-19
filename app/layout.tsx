@@ -1,5 +1,6 @@
 import './globals.css'
 
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
@@ -20,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <TrpcProvider>{children}</TrpcProvider>
+        <UserProvider>
+          <TrpcProvider>{children}</TrpcProvider>
+        </UserProvider>
       </body>
     </html>
   )
