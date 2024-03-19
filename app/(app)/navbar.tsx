@@ -51,7 +51,16 @@ export function NavBar() {
       href: route('/faq')
     }
   ]
-  const clubMenuItems: MenuItemProps[] = []
+  const clubMenuItems: MenuItemProps[] = [
+    {
+      title: '중앙동아리 (명륜)',
+      href: route('/clubs/central/seoul')
+    },
+    {
+      title: '중앙동아리 (율전)',
+      href: route('/clubs/central/suwon')
+    }
+  ]
 
   return (
     <nav className="fixed top-0 flex h-[56px] w-full flex-row border-b-2 bg-white">
