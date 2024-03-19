@@ -1,7 +1,6 @@
 'use client'
 
 import { RiAccountCircleLine } from '@remixicon/react'
-import { RiCloseCircleLine } from '@remixicon/react'
 import { Route } from 'next'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -30,15 +29,29 @@ export function NavBar() {
       title: '내 계정',
       href: route(`/account`),
       icon: <RiAccountCircleLine />
-    },
-    {
-      title: '로그아웃',
-      href: route(`/api/auth/logout`),
-      icon: <RiCloseCircleLine />
     }
+    // {
+    //   title: '로그아웃',
+    //   href: route(`/api/auth/logout`),
+    //   icon: <RiCloseCircleLine />
+    // }
   ]
 
-  const mainMenuItems: MenuItemProps[] = []
+  const unionMenuItems: MenuItemProps[] = [
+    {
+      title: '소개',
+      href: route('/introduction')
+    },
+    {
+      title: '회칙',
+      href: route('/rules')
+    },
+    {
+      title: 'FAQ',
+      href: route('/faq')
+    }
+  ]
+  const clubMenuItems: MenuItemProps[] = []
 
   return (
     <nav className="fixed top-0 flex h-[56px] w-full flex-row border-b-2 bg-white">
@@ -54,7 +67,22 @@ export function NavBar() {
               <NavigationMenuTrigger>동아리연합회</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                  {mainMenuItems.map((item) => (
+                  {unionMenuItems.map((item) => (
+                    <MenuItem key={item.title} {...item} />
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>동아리 홍보 / 소개</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  {clubMenuItems.map((item) => (
                     <MenuItem key={item.title} {...item} />
                   ))}
                 </ul>
@@ -85,7 +113,7 @@ export function NavBar() {
   )
 }
 
-type MenuItemProps = { title: string; icon: React.ReactNode; href: Route }
+type MenuItemProps = { title: string; icon?: React.ReactNode; href: Route }
 
 function AccountMenuItem({ title, icon, href }: MenuItemProps) {
   return (
@@ -97,7 +125,7 @@ function AccountMenuItem({ title, icon, href }: MenuItemProps) {
         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
       >
         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-          <div className="mr-[8px] flex items-center">{icon}</div>
+          {icon && <div className="mr-[8px] flex items-center">{icon}</div>}
           <div className="text-sm font-medium leading-none">{title}</div>
         </NavigationMenuLink>
       </Link>
