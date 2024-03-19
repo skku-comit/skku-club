@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { createApiCaller } from '@/lib/api/trpc/server'
 
 export default async function NoticesPage({
@@ -29,8 +30,16 @@ export default async function NoticesPage({
       <main>
         {notices.map((notice) => (
           <div key={notice.id}>
-            <h2>{notice.title}</h2>
-            <p>{notice.publishedAt.toISOString()}</p>
+            <Link href={`/notices/${notice.id}`}>
+              <Card>
+                <CardHeader>
+                  <h2>{notice.title}</h2>
+                </CardHeader>
+                <CardContent>
+                  <p>공지일: {notice.publishedAt.toISOString()}</p>
+                </CardContent>
+              </Card>
+            </Link>
           </div>
         ))}
       </main>
