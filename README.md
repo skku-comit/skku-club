@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# skku-club
 
-## Getting Started
+## 로컬 개발 환경 구성
 
-First, run the development server:
+1. node.js 설치
+2. `corepack` 활성화
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+corepack enable
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. 의존성 설치
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm i
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. podman 설치
+5. podman-compose 설치
+6. DB 실행
 
-## Learn More
+```bash
+pnpm start:db
+```
 
-To learn more about Next.js, take a look at the following resources:
+7. 개발 서버 실행
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 텍스트 관리
 
-## Deploy on Vercel
+[`./app/(app)/(mdx)`]에 동아리 연합회 소개, FAQ, 회칙이 저장되어 있고, 파일은 MDX로 작성되어 있음.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+기존 텍스트 보면서 마크대운 문법으로 적당히 작성하면 됨.
