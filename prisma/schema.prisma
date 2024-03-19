@@ -1,0 +1,23 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+generator zod {
+    provider         = "zod-prisma-types"
+    output           = "../lib/prisma/zod"
+    createInputTypes = false
+    addIncludeType   = false
+    addSelectType    = false
+}
+
+model NoticePost {
+    id        Int      @id @default(autoincrement())
+    title     String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+}
