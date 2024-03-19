@@ -8,13 +8,13 @@ import { db } from '../prisma'
 export type SessionUser = inferAsyncReturnType<typeof getCurrentUser>
 
 export async function getCurrentUser() {
-  const session = await getSession()
+  const session = await getSessionUser()
 
   if (!session) {
     return null
   }
 
-  const user = db.user.upsert({
+  const user = await db.user.upsert({
     where: {
       auth0Id: session.auth0Id
     },
@@ -43,4 +43,21 @@ export async function getCurrentUser() {
   })
 
   return user
+}
+
+async function getSessionUser() {
+  const session = await getSession()
+
+  if (!session) {
+    return null
+  }
+
+  return {
+    email: session.user.email,
+    emailVerified: session.user.email_verified,
+    name: session.user.name,
+    auth0Id: session.user.sub,
+    avatarUrl: session.user.picture,
+    token: session.accessToken
+  }
 }
