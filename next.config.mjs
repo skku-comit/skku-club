@@ -1,8 +1,11 @@
+import withMDX from '@next/mdx'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   experimental: {
     typedRoutes: true
   }
 }
 
-export default nextConfig
+export default withMDX(nextConfig)
