@@ -3,7 +3,6 @@ import superjson from 'superjson'
 import { z } from 'zod'
 
 export type { default as superjson } from 'superjson'
-export type { OpenApiMeta } from 'trpc-openapi'
 
 export const UserRoleSchema = z.enum(['USER', 'ADMIN'])
 
