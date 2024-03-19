@@ -4,8 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "db:build": "prisma generate",
+    "db:push": "prisma db push --accept-data-loss",
+    "dev": "pnpm run db:push && next dev",
+    "build": "pnpm run db:build && next build",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky && vc env pull .env",
