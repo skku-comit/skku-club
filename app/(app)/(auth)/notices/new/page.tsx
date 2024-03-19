@@ -41,7 +41,7 @@ export default function NewNoticePage() {
   const router = useRouter()
   const create = apiClient.notices.create.useMutation({
     onSuccess(data, variables, context) {
-      router.push('/notices')
+      router.push(`/notices/${data.id}`)
     }
   })
 
