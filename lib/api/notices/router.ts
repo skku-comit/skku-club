@@ -47,32 +47,69 @@ export const notices = router({
       )
     )
     .query(async ({ input: { offset }, ctx }) => {
-      const notices = await db.noticePost.findMany({
-        skip: offset,
-        take: 10,
-        orderBy: { publishedAt: 'desc' },
-        select: {
-          id: true,
-          title: true,
-          publishedAt: true
-        }
-      })
+      if (ctx.isAdmin) {
+        const notices = await db.noticePost.findMany({
+          skip: offset,
+          take: 10,
+          orderBy: { publishedAt: 'desc' },
+          select: {
+            id: true,
+            title: true,
+            publishedAt: true
+          }
+        })
 
-      return notices
+        return notices
+      } else {
+        const notices = await db.noticePost.findMany({
+          where: {
+            published: true
+          },
+          skip: offset,
+          take: 10,
+          orderBy: { publishedAt: 'desc' },
+          select: {
+            id: true,
+            title: true,
+            publishedAt: true
+          }
+        })
+
+        return notices
+      }
     }),
 
   get: publicProcedure
     .input(z.object({ id: z.number() }))
-    .output(NoticePostSchema.pick({ id: true, title: true, content: true }))
-    .query(async ({ input: { id }, ctx: { user } }) => {
-      const notice = await db.noticePost.findUnique({
-        where: { id },
-        select: {
-          id: true,
-          title: true,
-          content: true
-        }
+    .output(
+      NoticePostSchema.pick({
+        id: true,
+        title: true,
+        content: true,
+        publishedAt: true
       })
+    )
+    .query(async ({ input: { id }, ctx: { user } }) => {
+      const notice =
+        user?.role === 'ADMIN'
+          ? await db.noticePost.findUnique({
+              where: { id },
+              select: {
+                id: true,
+                title: true,
+                publishedAt: true,
+                content: true
+              }
+            })
+          : await db.noticePost.findUnique({
+              where: { id, published: true },
+              select: {
+                id: true,
+                title: true,
+                publishedAt: true,
+                content: true
+              }
+            })
 
       if (!notice) {
         console.error(`User ${user?.id} tried to non-existent notice ${id}`)
