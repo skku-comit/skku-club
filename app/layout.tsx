@@ -4,6 +4,7 @@ import { UserProvider } from '@auth0/nextjs-auth0/client'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import { ClientContext } from './client-context'
 import { TrpcProvider } from './trpc-provider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,9 +22,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <UserProvider>
-          <TrpcProvider>{children}</TrpcProvider>
-        </UserProvider>
+        <ClientContext>
+          <UserProvider>
+            <TrpcProvider>{children}</TrpcProvider>
+          </UserProvider>
+        </ClientContext>
       </body>
     </html>
   )
