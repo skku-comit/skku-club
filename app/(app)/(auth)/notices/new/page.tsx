@@ -2,10 +2,10 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { Button } from 'react-day-picker'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
