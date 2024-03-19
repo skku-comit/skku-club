@@ -47,6 +47,10 @@ export function NavBar() {
       href: route('/rules')
     },
     {
+      title: '공지사항',
+      href: route('/notices')
+    },
+    {
       title: 'FAQ',
       href: route('/faq')
     }
