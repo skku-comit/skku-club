@@ -1,0 +1,4 @@
+*.d.ts
+pnpm-lock.yaml
+# Prisma
+lib/prisma/zod
