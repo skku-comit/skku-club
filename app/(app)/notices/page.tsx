@@ -8,9 +8,14 @@ export default async function NoticesPage({
 }: {
   searchParams?: { [key: string]: string | string[] | undefined }
 }) {
+  let offset = Number(searchParams?.page)
+  if (isNaN(offset)) {
+    offset = 0
+  }
+
   const apiCaller = await createApiCaller()
   const notices = await apiCaller.notices.list({
-    offset: Number(searchParams?.page) * 10
+    offset
   })
 
   return (
@@ -25,7 +30,7 @@ export default async function NoticesPage({
         {notices.map((notice) => (
           <div key={notice.id}>
             <h2>{notice.title}</h2>
-            <p>{notice.content}</p>
+            <p>{notice.publishedAt.toISOString()}</p>
           </div>
         ))}
       </main>
