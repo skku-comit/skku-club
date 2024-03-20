@@ -31,6 +31,7 @@ export default function ClubEditForm({
     mode: 'all',
     resolver: zodResolver(UpdateClubSchema),
     defaultValues: {
+      id: club.id,
       description: club.description
     }
   })
