@@ -16,10 +16,25 @@ import {
 import { Form } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { apiClient } from '@/lib/api/trpc/client'
 
 export function AddAdminButton() {
   const form = useForm<{ name: string; email: string }>()
   const [open, setOpen] = useState(false)
+
+  const makeAdmin = apiClient.siteMembers.changeRole.useMutation()
+
+  const onSubmit = form.handleSubmit(async (data) => {
+    await makeAdmin.mutateAsync({
+      email: data.email,
+      admin: true
+    })
+
+    alert('관리자로 추가되었습니다.')
+
+    form.reset()
+    setOpen(false)
+  })
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -28,7 +43,7 @@ export function AddAdminButton() {
       </DialogTrigger>
       <DialogContent>
         <Form {...form}>
-          <form>
+          <form onSubmit={onSubmit}>
             <DialogHeader>
               <DialogTitle>관리자 추가 </DialogTitle>
               <DialogDescription>
@@ -41,12 +56,6 @@ export function AddAdminButton() {
                   Name
                 </Label>
                 <Input id="name" value="Pedro Duarte" className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                  Username
-                </Label>
-                <Input id="username" value="" className="col-span-3" />
               </div>
             </div>
             <DialogFooter>
