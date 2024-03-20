@@ -12,6 +12,8 @@ import {
 import { apiClient } from '@/lib/api/trpc/client'
 import { CampusType } from '@/lib/prisma'
 
+import { EditAdminButton } from './edit-admin-button'
+
 export interface ClubListItemProps {
   club: {
     id: bigint
@@ -37,7 +39,7 @@ export function ClubListItem({ club, onChange }: ClubListItemProps) {
       </CardHeader>
       <CardContent>{club.description}</CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline">수정 권한 관리</Button>
+        <EditAdminButton clubId={club.id} />
         <Button
           variant="outline"
           onClick={async () => {
