@@ -33,12 +33,15 @@ model User {
     updatedAt       DateTime         @updatedAt
     clubMemberships ClubMembership[]
     NoticePost      NoticePost[]
+    Club            Club[]
 }
 
 model Club {
     id          BigInt           @id @default(autoincrement())
     name        String
     slug        String           @unique
+    creator     User             @relation(fields: [creatorId], references: [id])
+    creatorId   BigInt
     memberships ClubMembership[]
     createdAt   DateTime         @default(now())
     updatedAt   DateTime         @updatedAt
