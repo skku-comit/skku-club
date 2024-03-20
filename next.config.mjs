@@ -12,7 +12,7 @@ const withMDX = mdx({
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   experimental: {
-    // typedRoutes: true
+    typedRoutes: true
   }
 }
 
