@@ -2,7 +2,7 @@ import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 import { ClubMemberRoleSchema, ClubSchema, db } from '@/lib/prisma'
-import { NewClubSchema } from '@/lib/schemas'
+import { NewClubSchema, UpdateClubSchema } from '@/lib/schemas'
 
 import { protectedProcedure, publicProcedure, router } from '../trpc/init'
 
@@ -41,6 +41,26 @@ export const clubs = router({
         })
 
         return club
+      }
+    ),
+
+  update: protectedProcedure
+    .input(UpdateClubSchema)
+    .output(z.object({ success: z.boolean() }))
+    .mutation(
+      async ({ input: { id, description }, ctx: { user, abilities } }) => {
+        await abilities.requireClubOwner(id)
+
+        await db.club.update({
+          where: {
+            id
+          },
+          data: {
+            description
+          }
+        })
+
+        return { success: true }
       }
     ),
 
@@ -95,6 +115,34 @@ export const clubs = router({
       })
 
       return clubs
+    }),
+
+  get: publicProcedure
+    .input(z.object({ id: z.bigint() }))
+    .output(
+      ClubSchema.pick({
+        id: true,
+        name: true,
+        description: true,
+        category: true,
+        campus: true
+      }).nullable()
+    )
+    .query(async ({ input: { id } }) => {
+      const club = await db.club.findUnique({
+        where: {
+          id
+        },
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          category: true,
+          campus: true
+        }
+      })
+
+      return club
     }),
 
   changeRole: protectedProcedure

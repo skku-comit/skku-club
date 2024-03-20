@@ -5,12 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import {
-  ClubCampusField,
-  ClubCategoryField,
-  ClubDescriptionField,
-  ClubNameField
-} from '@/components/club/edit/fields'
+import { ClubDescriptionField } from '@/components/club/edit/fields'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -22,55 +17,57 @@ import {
 } from '@/components/ui/card'
 import { Form } from '@/components/ui/form'
 import { apiClient } from '@/lib/api/trpc/client'
-import { NewClubSchema } from '@/lib/schemas'
+import { ApiOutput } from '@/lib/api/trpc/router'
+import { UpdateClubSchema } from '@/lib/schemas'
 
-type Inputs = z.infer<typeof NewClubSchema>
+type Inputs = z.infer<typeof UpdateClubSchema>
 
-export default function NewClubPage() {
+export default function ClubEditForm({
+  club
+}: {
+  club: NonNullable<ApiOutput['clubs']['get']>
+}) {
   const form = useForm<Inputs>({
     mode: 'all',
-    resolver: zodResolver(NewClubSchema),
+    resolver: zodResolver(UpdateClubSchema),
     defaultValues: {
-      name: '',
-      description: ''
+      id: club.id,
+      description: club.description
     }
   })
   const router = useRouter()
-  const create = apiClient.clubs.create.useMutation({
+  const update = apiClient.clubs.update.useMutation({
     onSuccess(data, variables, context) {
-      router.push(`/club/${data.id}`)
+      router.push(`/club/${club.id}`)
     }
   })
 
   const onSubmit = form.handleSubmit(async (values) => {
-    await create.mutateAsync(values)
+    await update.mutateAsync({
+      ...values,
+      id: club.id
+    })
   })
 
   return (
     <div className="flex flex-col">
       <Form {...form}>
         <form onSubmit={onSubmit}>
-          <Card className="w-full max-w-lg">
+          <Card className="w-full">
             <CardHeader>
-              <CardTitle className="font-bold">동아리 추가</CardTitle>
+              <CardTitle className="font-bold">동아리 설명 수정</CardTitle>
               <CardDescription className="font-bold">
-                동아리를 추가합니다
+                HTML을 사용하실 수 있습니다
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <ClubNameField />
-
                 <ClubDescriptionField />
-
-                <ClubCategoryField />
-
-                <ClubCampusField />
               </div>
             </CardContent>
             <CardFooter>
               <Button className="w-full font-bold" type="submit">
-                동아리 생성
+                저장
               </Button>
             </CardFooter>
           </Card>

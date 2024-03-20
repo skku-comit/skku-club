@@ -10,6 +10,7 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { apiClient } from '@/lib/api/trpc/client'
+import { formatCampus, formatCategory } from '@/lib/format'
 import { CampusType } from '@/lib/prisma'
 
 import { EditAdminButton } from './edit-admin-button'
@@ -54,24 +55,4 @@ export function ClubListItem({ club, onChange }: ClubListItemProps) {
       </CardFooter>
     </Card>
   )
-}
-
-function formatCategory(category: string) {
-  switch (category) {
-    case 'central':
-      return '중앙동아리'
-    default:
-      return `TODO: ${category}`
-  }
-}
-
-function formatCampus(campus: CampusType) {
-  switch (campus) {
-    case 'SEOUL':
-      return '명륜'
-    case 'SUWON':
-      return '율전'
-    case 'BOTH':
-      return '공통'
-  }
 }
