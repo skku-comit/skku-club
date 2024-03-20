@@ -36,10 +36,19 @@ model User {
     Club            Club[]
 }
 
+enum Campus {
+    SEOUL
+    SUWON
+    BOTH
+}
+
 model Club {
     id          BigInt           @id @default(autoincrement())
     name        String           @unique
     description String
+    campus      Campus
+    category    String
+    tags        String[]
     creator     User             @relation(fields: [creatorId], references: [id])
     creatorId   BigInt
     memberships ClubMembership[]
