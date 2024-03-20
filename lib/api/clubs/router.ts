@@ -177,6 +177,6 @@ export const clubs = router({
         }
       })
 
-      return members
+      return members.map((m) => m.user)
     })
 })
