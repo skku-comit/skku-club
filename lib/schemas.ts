@@ -1,11 +1,24 @@
 import { z } from 'zod'
 
-export const NoticeTitleSchema = z.string().min(1).max(100)
+import { CampusSchema } from './prisma'
 
-export const NoticeContentSchema = z.string().min(1)
+const NoticeTitleSchema = z.string().min(1).max(100)
+
+const NoticeContentSchema = z.string().min(1)
 
 export const NewNoticeSchema = z.object({
   title: NoticeTitleSchema,
   publishedAt: z.date(),
   content: NoticeContentSchema
+})
+
+const ClubTitleSchema = z.string().min(1).max(100)
+
+const ClubDescriptionSchema = z.string().min(1)
+
+export const NewClubSchema = z.object({
+  name: ClubTitleSchema,
+  description: ClubDescriptionSchema,
+  campus: CampusSchema,
+  category: z.string()
 })

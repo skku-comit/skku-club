@@ -1,10 +1,10 @@
 'use client'
 
-import { RiAccountCircleLine } from '@remixicon/react'
+import { useUser } from '@auth0/nextjs-auth0/client'
+import { RiAccountCircleLine, RiCloseCircleLine } from '@remixicon/react'
 import { Route } from 'next'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, Suspense } from 'react'
 
 import { Logo } from '@/components/common/logo'
 import { MenuItem } from '@/components/navbar/menu-item'
@@ -17,24 +17,25 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu'
+import { useCurrentRedirectUrl } from '@/lib/hooks/use-current-redirect-url'
 import { route } from '@/lib/utils'
 
 export interface NavBarProps extends PropsWithChildren {}
 
 export function NavBar() {
-  const pathname = usePathname()
+  const { user, isLoading: isAuth0Loading } = useUser()
 
   const accountMenus: MenuItemProps[] = [
     {
       title: '내 계정',
       href: route(`/account`),
       icon: <RiAccountCircleLine />
+    },
+    {
+      title: '로그아웃',
+      href: route(`/api/auth/logout`),
+      icon: <RiCloseCircleLine />
     }
-    // {
-    //   title: '로그아웃',
-    //   href: route(`/api/auth/logout`),
-    //   icon: <RiCloseCircleLine />
-    // }
   ]
 
   const unionMenuItems: MenuItemProps[] = [
@@ -65,6 +66,18 @@ export function NavBar() {
       href: route('/clubs/central/suwon')
     }
   ]
+  const adminMenuItems: MenuItemProps[] = [
+    {
+      title: '공지사항 작성',
+      href: route('/notices/new')
+    },
+    {
+      title: '동아리 목록 관리',
+      href: route('/admin/clubs')
+    }
+  ]
+
+  if (isAuth0Loading) return null
 
   return (
     <nav className="fixed top-0 flex h-[56px] w-full flex-row border-b-2 bg-white">
@@ -104,26 +117,53 @@ export function NavBar() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="flex-1"></div>
-
-        <NavigationMenu className="h-full">
+        <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem className="flex flex-col">
-              <NavigationMenuTrigger>로그인</NavigationMenuTrigger>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>관리자 메뉴</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="flex w-[100px] flex-col gap-3 p-4 md:w-[120px] lg:w-[150px] ">
-                  {accountMenus.map((component) => (
-                    <AccountMenuItem key={component.title} {...component} />
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  {adminMenuItems.map((item) => (
+                    <MenuItem key={item.title} {...item} />
                   ))}
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
+
+        <div className="flex-1"></div>
+
+        {user ? (
+          <NavigationMenu className="h-full">
+            <NavigationMenuList>
+              <NavigationMenuItem className="flex flex-col">
+                <NavigationMenuTrigger>{user.name}</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="flex w-[100px] flex-col gap-3 p-4 md:w-[120px] lg:w-[150px] ">
+                    {accountMenus.map((component) => (
+                      <AccountMenuItem key={component.title} {...component} />
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        ) : (
+          <Suspense>
+            <LoginLink />
+          </Suspense>
+        )}
       </div>
       <div className="lg:flex-1"></div>
     </nav>
   )
+}
+
+function LoginLink() {
+  const getRedirectUrl = useCurrentRedirectUrl()
+
+  return <Link href={`/api/auth/login?returnTo=${getRedirectUrl()}`}></Link>
 }
 
 type MenuItemProps = { title: string; icon?: React.ReactNode; href: Route }
