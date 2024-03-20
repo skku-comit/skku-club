@@ -5,7 +5,7 @@ import { db } from '@/lib/prisma'
 
 import { protectedProcedure, router } from '../trpc/init'
 
-export const members = router({
+export const siteMembers = router({
   listAdmins: protectedProcedure
     .input(
       z.object({
@@ -14,7 +14,11 @@ export const members = router({
     )
     .output(
       z.array(
-        z.object({ userId: z.bigint(), name: z.string(), email: z.string() })
+        z.object({
+          id: z.bigint(),
+          name: z.string().nullable(),
+          email: z.string()
+        })
       )
     )
     .query(async ({ input: { page }, ctx }) => {
@@ -54,7 +58,7 @@ export const members = router({
       })
     )
     .output(z.void())
-    .query(async ({ input: { email, admin }, ctx }) => {
+    .mutation(async ({ input: { email, admin }, ctx }) => {
       if (ctx.user.role !== 'ADMIN') {
         throw new TRPCError({
           code: 'FORBIDDEN',
