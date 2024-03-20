@@ -19,16 +19,21 @@ import { Label } from '@/components/ui/label'
 import { apiClient } from '@/lib/api/trpc/client'
 
 export function AddAdminButton() {
-  const form = useForm<{ name: string; email: string }>()
+  const form = useForm<{ email: string }>()
   const [open, setOpen] = useState(false)
 
   const makeAdmin = apiClient.siteMembers.changeRole.useMutation()
 
   const onSubmit = form.handleSubmit(async (data) => {
-    await makeAdmin.mutateAsync({
-      email: data.email,
-      admin: true
-    })
+    try {
+      await makeAdmin.mutateAsync({
+        email: data.email,
+        admin: true
+      })
+    } catch (e) {
+      alert(`이메일을 확인해주세요. ${(e as any).message}`)
+      return
+    }
 
     alert('관리자로 추가되었습니다.')
 
@@ -52,10 +57,10 @@ export function AddAdminButton() {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
+                <Label htmlFor="email" className="text-right">
+                  이메일
                 </Label>
-                <Input id="name" value="Pedro Duarte" className="col-span-3" />
+                <Input id="email" className="col-span-3" />
               </div>
             </div>
             <DialogFooter>
