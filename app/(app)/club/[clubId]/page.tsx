@@ -1,5 +1,7 @@
+import Link from 'next/link'
 import * as sanitizeHtml from 'sanitize-html'
 
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -28,10 +30,19 @@ export default async function ClubPage({
     <div className="flex flex-col">
       <Card>
         <CardHeader>
-          <CardTitle>{club.name}</CardTitle>
-          <CardDescription>
-            {formatCategory(club.category)} - {formatCampus(club.campus)}
-          </CardDescription>
+          <div className="flex flex-row justify-between">
+            <div>
+              <CardTitle>{club.name}</CardTitle>
+              <CardDescription>
+                {formatCategory(club.category)} - {formatCampus(club.campus)}
+              </CardDescription>
+            </div>
+            <div>
+              <Link href={`/club/${club.id}/edit`}>
+                <Button variant={'outline'}> 수정 </Button>
+              </Link>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <div dangerouslySetInnerHTML={{ __html: description }}></div>
