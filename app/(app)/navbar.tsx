@@ -4,7 +4,7 @@ import { useUser } from '@auth0/nextjs-auth0/client'
 import { RiAccountCircleLine, RiCloseCircleLine } from '@remixicon/react'
 import { Route } from 'next'
 import Link from 'next/link'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, Suspense } from 'react'
 
 import { Logo } from '@/components/common/logo'
 import { MenuItem } from '@/components/navbar/menu-item'
@@ -23,7 +23,6 @@ import { route } from '@/lib/utils'
 export interface NavBarProps extends PropsWithChildren {}
 
 export function NavBar() {
-  const getRedirectUrl = useCurrentRedirectUrl()
   const { user, isLoading: isAuth0Loading } = useUser()
 
   const accountMenus: MenuItemProps[] = [
@@ -151,12 +150,20 @@ export function NavBar() {
             </NavigationMenuList>
           </NavigationMenu>
         ) : (
-          <Link href={`/api/auth/login?returnTo=${getRedirectUrl()}`}></Link>
+          <Suspense>
+            <LoginLink />
+          </Suspense>
         )}
       </div>
       <div className="lg:flex-1"></div>
     </nav>
   )
+}
+
+function LoginLink() {
+  const getRedirectUrl = useCurrentRedirectUrl()
+
+  return <Link href={`/api/auth/login?returnTo=${getRedirectUrl()}`}></Link>
 }
 
 type MenuItemProps = { title: string; icon?: React.ReactNode; href: Route }
