@@ -7,7 +7,7 @@ export default function ClubsPage() {
     <div className="flex flex-col gap-y-4">
       <div></div>
       <div>
-        <Link href={`/admin/clubs/new`}>
+        <Link href={`/clubs/new`}>
           <Button>동아리 추가</Button>
         </Link>
       </div>
