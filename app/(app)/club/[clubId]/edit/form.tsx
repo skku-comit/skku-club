@@ -49,9 +49,9 @@ export default function ClubEditForm({
     <div className="flex flex-col">
       <Form {...form}>
         <form onSubmit={onSubmit}>
-          <Card className="w-full max-w-lg">
+          <Card className="w-full">
             <CardHeader>
-              <CardTitle className="font-bold">동아리 수정</CardTitle>
+              <CardTitle className="font-bold">동아리 설명 수정</CardTitle>
               <CardDescription className="font-bold">
                 HTML을 사용하실 수 있습니다
               </CardDescription>
@@ -63,7 +63,7 @@ export default function ClubEditForm({
             </CardContent>
             <CardFooter>
               <Button className="w-full font-bold" type="submit">
-                동아리 수정
+                저장
               </Button>
             </CardFooter>
           </Card>
