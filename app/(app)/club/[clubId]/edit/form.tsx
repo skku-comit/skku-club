@@ -31,7 +31,7 @@ export default function ClubEditForm({
     mode: 'all',
     resolver: zodResolver(UpdateClubSchema),
     defaultValues: {
-      description: ''
+      description: club.description
     }
   })
   const router = useRouter()
