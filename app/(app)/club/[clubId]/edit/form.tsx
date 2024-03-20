@@ -35,14 +35,17 @@ export default function ClubEditForm({
     }
   })
   const router = useRouter()
-  const create = apiClient.clubs.update.useMutation({
+  const update = apiClient.clubs.update.useMutation({
     onSuccess(data, variables, context) {
       router.push(`/club/${club.id}`)
     }
   })
 
   const onSubmit = form.handleSubmit(async (values) => {
-    await create.mutateAsync(values)
+    await update.mutateAsync({
+      ...values,
+      id: club.id
+    })
   })
 
   return (
