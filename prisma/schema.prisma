@@ -45,6 +45,7 @@ enum Campus {
 model Club {
     id          BigInt           @id @default(autoincrement())
     name        String           @unique
+    /// HTML 지원
     description String
     campus      Campus
     category    String

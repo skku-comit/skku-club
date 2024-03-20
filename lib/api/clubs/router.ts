@@ -97,6 +97,34 @@ export const clubs = router({
       return clubs
     }),
 
+  get: publicProcedure
+    .input(z.object({ id: z.bigint() }))
+    .output(
+      ClubSchema.pick({
+        id: true,
+        name: true,
+        description: true,
+        category: true,
+        campus: true
+      }).nullable()
+    )
+    .query(async ({ input: { id } }) => {
+      const club = await db.club.findUnique({
+        where: {
+          id
+        },
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          category: true,
+          campus: true
+        }
+      })
+
+      return club
+    }),
+
   changeRole: protectedProcedure
     .input(
       z.object({
