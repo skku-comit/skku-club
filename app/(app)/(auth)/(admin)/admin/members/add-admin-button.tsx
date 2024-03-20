@@ -60,11 +60,15 @@ export function AddAdminButton() {
                 <Label htmlFor="email" className="text-right">
                   이메일
                 </Label>
-                <Input id="email" className="col-span-3" />
+                <Input
+                  id="email"
+                  className="col-span-3"
+                  {...form.register('email')}
+                />
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">관리자 추가</Button>
             </DialogFooter>
           </form>
         </Form>
