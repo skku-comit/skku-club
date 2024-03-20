@@ -24,7 +24,34 @@ export default async function ClubPage({
     return <div>동아리를 찾을 수 없습니다.</div>
   }
 
-  const description = sanitizeHtml.default(club.description, {})
+  const description = sanitizeHtml.default(club.description, {
+    ...sanitizeHtml.defaults,
+    allowedAttributes: {
+      '*': ['style'],
+      a: ['href', 'name', 'target', 'style'],
+      img: [
+        'src',
+        'srcset',
+        'alt',
+        'title',
+        'width',
+        'height',
+        'loading',
+        'style'
+      ]
+    },
+    allowedStyles: {
+      '*': {
+        color: [
+          /^[a-zA-Z]+$/i,
+          /^#(0x)?[0-9a-f]+$/i,
+          /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/
+        ],
+        'text-align': [/^left$/, /^right$/, /^center$/],
+        'font-size': [/^\d+(?:px|em|%)$/]
+      }
+    }
+  })
 
   return (
     <div className="flex flex-col">
