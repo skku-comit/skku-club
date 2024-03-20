@@ -124,7 +124,12 @@ export default function NewClubPage() {
                           동아리 분류
                         </FormLabel>
                         <FormControl>
-                          <Select>
+                          <Select
+                            {...field}
+                            onValueChange={(e) => {
+                              field.onChange(e)
+                            }}
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="동아리 분류 선택" />
                             </SelectTrigger>
@@ -156,7 +161,12 @@ export default function NewClubPage() {
                           캠퍼스
                         </FormLabel>
                         <FormControl>
-                          <Select>
+                          <Select
+                            {...field}
+                            onValueChange={(e) => {
+                              field.onChange(e)
+                            }}
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="캠퍼스 선택" />
                             </SelectTrigger>
