@@ -1,5 +1,6 @@
 'use client'
 
+import { RiCloseLine } from '@remixicon/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -27,11 +28,12 @@ export function EditAdminButton({ clubId }: EditAdminButtonProps) {
   const [open, setOpen] = useState(false)
 
   const clubAdmins = apiClient.clubs.listAdmins.useQuery({ clubId })
-  const makeAdmin = apiClient.clubs.changeRole.useMutation()
+  const changeRole = apiClient.clubs.changeRole.useMutation()
 
   const onSubmit = form.handleSubmit(async (data) => {
+    if (!data.email) return
     try {
-      await makeAdmin.mutateAsync({
+      await changeRole.mutateAsync({
         clubId,
         email: data.email,
         role: 'OWNER'
@@ -46,8 +48,6 @@ export function EditAdminButton({ clubId }: EditAdminButtonProps) {
     form.reset()
     setOpen(false)
   })
-
-  console.log(clubAdmins.data)
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -64,9 +64,41 @@ export function EditAdminButton({ clubId }: EditAdminButtonProps) {
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col gap-y-4">
+              <h1>현재 권한 가진 학생:</h1>
               {clubAdmins.data?.map((admin) => (
-                <div key={admin.id.toString()}>
-                  {admin.name} - {admin.email}
+                <div
+                  key={admin.id.toString()}
+                  className="flex flex-row justify-between"
+                >
+                  <div>
+                    {admin.name} - {admin.email}
+                  </div>
+                  <Button
+                    variant={'outline'}
+                    onClick={async () => {
+                      try {
+                        const email = admin.email
+                        console.log('onClick', email)
+
+                        await changeRole.mutateAsync({
+                          clubId,
+                          email: email,
+                          role: 'MEMBER'
+                        })
+
+                        alert('권한이 제거되었습니다.')
+                      } catch (e) {
+                        alert(
+                          `권한 제거 실패: 이메일을 확인해주세요. ${(e as any).message}`
+                        )
+                        return
+                      }
+
+                      clubAdmins.refetch()
+                    }}
+                  >
+                    <RiCloseLine />
+                  </Button>
                 </div>
               ))}
             </div>

@@ -108,6 +108,8 @@ export const clubs = router({
     .output(z.object({ success: z.boolean() }))
     .mutation(
       async ({ input: { clubId, email, role }, ctx: { user, abilities } }) => {
+        console.log('email', email)
+
         // 사이트 관리자 및 동아리 관리자만 권한을 변경할 수 있습니다.
         await abilities.requireClubOwner(clubId)
 
@@ -164,7 +166,8 @@ export const clubs = router({
 
       const members = await db.clubMembership.findMany({
         where: {
-          clubId
+          clubId,
+          role: 'OWNER'
         },
         select: {
           user: {
