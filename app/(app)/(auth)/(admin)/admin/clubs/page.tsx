@@ -25,7 +25,12 @@ export default function ClubsPage() {
       <div className="grid grid-cols-1 gap-x-4 gap-y-4 md:grid-cols-3">
         {clubs.data?.map((club) => (
           <div key={club.id.toString()}>
-            <ClubListItem club={club} />
+            <ClubListItem
+              club={club}
+              onChange={() => {
+                clubs.refetch()
+              }}
+            />
           </div>
         ))}
       </div>

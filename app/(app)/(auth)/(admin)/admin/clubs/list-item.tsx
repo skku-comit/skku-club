@@ -20,9 +20,11 @@ export interface ClubListItemProps {
     category: string
     campus: CampusType
   }
+
+  onChange: () => void
 }
 
-export function ClubListItem({ club }: ClubListItemProps) {
+export function ClubListItem({ club, onChange }: ClubListItemProps) {
   const deleteClub = apiClient.clubs.delete.useMutation()
 
   return (
@@ -41,6 +43,8 @@ export function ClubListItem({ club }: ClubListItemProps) {
           onClick={async () => {
             confirm('정말 삭제하시겠습니까?') &&
               (await deleteClub.mutateAsync({ id: club.id }))
+
+            onChange()
           }}
         >
           삭제
