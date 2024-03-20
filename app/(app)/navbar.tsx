@@ -68,6 +68,10 @@ export function NavBar() {
   ]
   const adminMenuItems: MenuItemProps[] = [
     {
+      title: '사이트 권한 관리',
+      href: route('/admin/members')
+    },
+    {
       title: '공지사항 작성',
       href: route('/notices/new')
     },
