@@ -63,7 +63,9 @@ export const notices = router({
       } else {
         const notices = await db.noticePost.findMany({
           where: {
-            published: true
+            publishedAt: {
+              lte: new Date()
+            }
           },
           skip: offset,
           take: 10,
@@ -102,7 +104,12 @@ export const notices = router({
               }
             })
           : await db.noticePost.findUnique({
-              where: { id, published: true },
+              where: {
+                id,
+                publishedAt: {
+                  lte: new Date()
+                }
+              },
               select: {
                 id: true,
                 title: true,
