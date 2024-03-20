@@ -2,14 +2,10 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { Form, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import {
-  ClubCampusField,
-  ClubCategoryField,
-  ClubDescriptionField
-} from '@/components/club/edit/fields'
+import { ClubDescriptionField } from '@/components/club/edit/fields'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -19,6 +15,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
+import { Form } from '@/components/ui/form'
 import { apiClient } from '@/lib/api/trpc/client'
 import { ApiOutput } from '@/lib/api/trpc/router'
 import { UpdateClubSchema } from '@/lib/schemas'
@@ -62,15 +59,11 @@ export default function ClubEditForm({
             <CardContent>
               <div className="space-y-4">
                 <ClubDescriptionField />
-
-                <ClubCategoryField />
-
-                <ClubCampusField />
               </div>
             </CardContent>
             <CardFooter>
               <Button className="w-full font-bold" type="submit">
-                동아리 생성
+                동아리 수정
               </Button>
             </CardFooter>
           </Card>

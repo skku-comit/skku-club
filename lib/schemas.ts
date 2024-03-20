@@ -24,5 +24,6 @@ export const NewClubSchema = z.object({
 })
 
 export const UpdateClubSchema = z.object({
+  id: z.bigint(),
   description: ClubDescriptionSchema
 })
