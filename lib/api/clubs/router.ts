@@ -44,6 +44,26 @@ export const clubs = router({
       }
     ),
 
+  delete: protectedProcedure
+    .input(z.object({ id: z.bigint() }))
+    .output(z.object({ success: z.boolean() }))
+    .mutation(async ({ input: { id }, ctx: { user } }) => {
+      if (user.role !== 'ADMIN') {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: '관리자만 동아리를 삭제할 수 있습니다.'
+        })
+      }
+
+      await db.club.delete({
+        where: {
+          id
+        }
+      })
+
+      return { success: true }
+    }),
+
   list: publicProcedure
     .input(
       z.object({
