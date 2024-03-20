@@ -105,6 +105,48 @@ export default function NewClubPage() {
                     )
                   }}
                 />
+
+                <FormField
+                  name="category"
+                  render={({ field, fieldState, formState }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel className="block font-bold">
+                          동아리 분류
+                        </FormLabel>
+                        <FormControl>
+                          <Textarea className="mt-1 block w-full" {...field} />
+                        </FormControl>
+                        <FormDescription>
+                          추후에 동아리 임원한테 동아리 설명 수정 권한을 줄 수
+                          있습니다
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )
+                  }}
+                />
+
+                <FormField
+                  name="campus"
+                  render={({ field, fieldState, formState }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel className="block font-bold">
+                          동아리 분류
+                        </FormLabel>
+                        <FormControl>
+                          <Textarea className="mt-1 block w-full" {...field} />
+                        </FormControl>
+                        <FormDescription>
+                          추후에 동아리 임원한테 동아리 설명 수정 권한을 줄 수
+                          있습니다
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )
+                  }}
+                />
               </div>
             </CardContent>
             <CardFooter>
