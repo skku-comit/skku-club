@@ -35,7 +35,7 @@ export default function NewClubPage() {
     mode: 'all',
     resolver: zodResolver(NewClubSchema),
     defaultValues: {
-      title: '',
+      name: '',
       description: ''
     }
   })
@@ -64,7 +64,7 @@ export default function NewClubPage() {
             <CardContent>
               <div className="space-y-4">
                 <FormField
-                  name="title"
+                  name="name"
                   render={({ field, fieldState, formState }) => {
                     return (
                       <FormItem>

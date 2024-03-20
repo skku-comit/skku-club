@@ -15,6 +15,6 @@ const ClubTitleSchema = z.string().min(1).max(100)
 const ClubDescriptionSchema = z.string().min(1)
 
 export const NewClubSchema = z.object({
-  title: ClubTitleSchema,
+  name: ClubTitleSchema,
   description: ClubDescriptionSchema
 })
