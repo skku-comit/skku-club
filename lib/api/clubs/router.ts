@@ -1,7 +1,12 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { ClubMemberRoleSchema, ClubSchema, db } from '@/lib/prisma'
+import {
+  CampusSchema,
+  ClubMemberRoleSchema,
+  ClubSchema,
+  db
+} from '@/lib/prisma'
 import { NewClubSchema, UpdateClubSchema } from '@/lib/schemas'
 
 import { protectedProcedure, publicProcedure, router } from '../trpc/init'
@@ -109,6 +114,38 @@ export const clubs = router({
           id: true,
           name: true,
           description: true,
+          category: true,
+          campus: true
+        }
+      })
+
+      return clubs
+    }),
+
+  listAll: publicProcedure
+    .input(
+      z.object({
+        campus: CampusSchema.optional()
+      })
+    )
+    .output(
+      z.array(
+        ClubSchema.pick({
+          id: true,
+          name: true,
+          category: true,
+          campus: true
+        })
+      )
+    )
+    .query(async ({ input: { campus } }) => {
+      const clubs = await db.club.findMany({
+        where: {
+          campus
+        },
+        select: {
+          id: true,
+          name: true,
           category: true,
           campus: true
         }
