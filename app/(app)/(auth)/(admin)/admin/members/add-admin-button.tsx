@@ -1,17 +1,18 @@
 'use client'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger
-} from '@radix-ui/react-dialog'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
-import { DialogFooter, DialogHeader } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
 import { Form } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -25,13 +26,13 @@ export function AddAdminButton() {
       <DialogTrigger asChild>
         <Button variant="outline">관리자 추가</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent>
         <Form {...form}>
           <form>
             <DialogHeader>
               <DialogTitle>관리자 추가 </DialogTitle>
               <DialogDescription>
-                관리자로 추가할 사용자의 이름과 이메일을 입력하세요.
+                관리자로 추가할 사용자의 이메일을 입력하세요.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
