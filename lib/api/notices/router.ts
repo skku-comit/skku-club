@@ -6,7 +6,7 @@ import { NewNoticeSchema } from '@/lib/schemas'
 
 import { protectedProcedure, publicProcedure, router } from '../trpc/init'
 
-export const notices = router({
+export const noticeRouter = router({
   create: protectedProcedure
     .input(NewNoticeSchema)
     .output(NoticePostSchema.pick({ id: true }))

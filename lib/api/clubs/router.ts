@@ -11,7 +11,7 @@ import { NewClubSchema, UpdateClubSchema } from '@/lib/schemas'
 
 import { protectedProcedure, publicProcedure, router } from '../trpc/init'
 
-export const clubs = router({
+export const clubRouter = router({
   create: protectedProcedure
     .input(NewClubSchema)
     .output(ClubSchema.pick({ id: true }))

@@ -5,7 +5,7 @@ import { db } from '@/lib/prisma'
 
 import { protectedProcedure, router } from '../trpc/init'
 
-export const siteMembers = router({
+export const siteMemberRouter = router({
   listAdmins: protectedProcedure
     .input(
       z.object({
