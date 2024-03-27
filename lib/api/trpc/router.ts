@@ -1,14 +1,14 @@
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 
-import { clubs } from '../clubs/router'
-import { notices } from '../notices/router'
-import { siteMembers } from '../site-members/router'
+import { clubRouter } from '../clubs/router'
+import { noticeRouter } from '../notices/router'
+import { siteMemberRouter } from '../site-members/router'
 import { router } from './init'
 
 export const apiRouter = router({
-  notices,
-  clubs,
-  siteMembers
+  notices: noticeRouter,
+  clubs: clubRouter,
+  siteMembers: siteMemberRouter
 })
 
 export type ApiRouter = typeof apiRouter
